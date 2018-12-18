@@ -1,26 +1,32 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Todos from './Todos'
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      todos: ["First", "Second", "Third"],
+      currentText: ''
+    };
+  }
+  setText = (e) => {
+    const newValue = e.target.value;
+    this.setState({currentText: newValue})
+  }
+  addTodo = () => {
+    const newTodo = this.state.currentText;
+    // The ... adds everything from the array that follows, then you can add more to the new array
+    const newTodos = [...this.state.todos, newTodo]
+    this.setState({todos: newTodos, currentText: ''})
+  }
   render() {
+    // Use this line so you don't have to write this.state for everything.
+    const {currentText, todos} = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Todos currentText={currentText}
+        setText={this.setText}
+        addTodo={this.addTodo}
+        todos={todos}  />
     );
   }
 }
